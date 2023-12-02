@@ -1,0 +1,5 @@
+print("This program calculates the average of the 3 numbers you enter.\nThe numbers can be int's or float's")
+number_1 = float(input("Enter the first number:\n"))
+number_2 = float(input("Enter the second number:\n"))
+number_3 = float(input("Enter the third number:\n"))
+print(f"Sum of the numbers: {(number_1 + number_2 + number_3):.3f}\nAverage of the numbers (rounded to 3 decimal places): {((number_1 + number_2 + number_3) / 3):.3f}\nAverage of the numbers (rounded to the closest integer): {((number_1 + number_2 + number_3) / 3):.0f}\nAverage of the numbers as an integer without the decimal part: {((number_1 + number_2 + number_3) // 3):.0f}")
