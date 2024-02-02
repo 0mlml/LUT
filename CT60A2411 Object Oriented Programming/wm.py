@@ -3,6 +3,7 @@ import argparse
 import zipfile
 import subprocess
 
+
 def create_week_structure(args):
     week_dir = f"week{args.week}"
 
@@ -11,7 +12,7 @@ def create_week_structure(args):
         if overwrite != 'y':
             print("Operation cancelled.")
             return
-    
+
     if os.path.exists(week_dir) and args.purge:
         print(f"Removing existing directory '{week_dir}'")
         os.removedirs(week_dir)
@@ -43,6 +44,7 @@ public class {other_class} {{
 }}
 """)
 
+
 def zip_week(args):
     output_file = f"week{args.week}.zip"
 
@@ -57,6 +59,7 @@ def zip_week(args):
             for file in files:
                 file_path = os.path.join(root, file)
                 z.write(file_path, os.path.relpath(file_path, f"week{args.week}"))
+
 
 def compile_java(args):
     week_dir = f"week{args.week}"
@@ -74,7 +77,7 @@ def compile_java(args):
 
     if java_files:
         try:
-            subprocess.run(["javac", "-d", bin_dir] + java_files, check=True)
+            subprocess.run(["javac", "-Xdiags:verbose", "-Xlint:all", "-d", bin_dir] + java_files, check=True)
             print(f"Compiled Java files to {bin_dir}")
         except subprocess.CalledProcessError as e:
             print(f"Error during compilation: {e}")
@@ -82,9 +85,10 @@ def compile_java(args):
 
     if args.execute:
         try:
-            subprocess.run(["java", "-cp", bin_dir, args.main_class], check=True)
+            subprocess.run(["java", args.main_class], check=True, cwd=bin_dir)
         except subprocess.CalledProcessError as e:
             print(f"Error executing main class: {e}")
+
 
 parser = argparse.ArgumentParser(description="Utility script for week-based operations.")
 subparsers = parser.add_subparsers(dest="command", required=True)
